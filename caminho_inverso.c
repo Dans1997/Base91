@@ -1,27 +1,18 @@
-/******************************
+/*
 * Primeiro Exercício em C
-*
-* Autores: Danillo Neves Souza - 
-*		   Andrei Buslik	   - 11/0024702
-*          Yan Victor		   - 14/0033599
-*		   Gustavo Costa	   - 14/0142568
-*
-* Disciplina: Software Básico
-* Professor: Marcelo Ladeira
-*
-* Data: 15/05/2018
-*******************************/
+* Autor: Danillo Neves Souza
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-char alfabeto[91] = { 0 }; /* Vetor global para simular a tabela ASCII Base91 */
+char alfabeto[91] = { 0 };
 
 /*************************************************
 Função que recebe um caracter, procura o caracter 
-no vetor 'alfabeto' e retorna o índice do caracter 
-quando o encontra no vetor.
+no array 'alfabeto' e retorna o índice do caracter 
+quando o encontra no array.
 **************************************************/
 
 int base91(char caracter)
@@ -36,7 +27,7 @@ int base91(char caracter)
 }
 
 /**********************************************************
-Função que preenche o vetor 'alfabeto' com os caracteres 
+Função que preenche o array 'alfabeto' com os caracteres 
 da tabela ASCII Base91 para que seja consultada nas funções 
 de codificação e decodificação.
 ***********************************************************/
@@ -145,20 +136,24 @@ void decodeTxt()
 
 	
 	fscanf(fp_txt, "%c", read);
-	primeiro_asc = base91(read[0]);                 /* Procura o caracter no vetor que representa a tabela ASCII Base91 */
+	//printf("\natual: %c\n", read[0]);
+	primeiro_asc = base91(read[0]);
 	fscanf(fp_txt, "%c", read);
-	segundo_asc = base91(read[0]);                  /* Procura o caracter no vetor que representa a tabela ASCII Base91 */
+	//printf("\natual: %c\n", read[0]);
+	segundo_asc = base91(read[0]);
+    //printf("\nOLAAA VEII 1: %d e 2: %d\n", primeiro_asc, segundo_asc);
 	original = (91)*(primeiro_asc) + (segundo_asc); /* Obtém número original */
-	fprintf(fp_bin, "%x\n", original);	            /* Imprime o número no arquivo binário */
+	fprintf(fp_bin, "%x\n", original);	/* Imprime o número no arquivo binário */
 	
 	while(!feof(fp_txt))
 	{
 	 fscanf(fp_txt, "%c", read); 
-	 primeiro_asc = base91(read[0]);                 /* Procura o caracter no vetor que representa a tabela ASCII Base91 */
+	 primeiro_asc = base91(read[0]);
      fscanf(fp_txt, "%c", read);
-	 segundo_asc = base91(read[0]);                  /* Procura o caracter no vetor que representa a tabela ASCII Base91 */
+	 segundo_asc = base91(read[0]);
 	 original = (91)*(primeiro_asc) + (segundo_asc); /* Obtém número original */
-	 fprintf(fp_bin, "%x\n", original);	             /* Imprime o número no arquivo binário */
+     printf("\noriginal: %d\n", original);
+	 fprintf(fp_bin, "%x\n", original);	/* Imprime o número no arquivo binário */
 	}
 
 	fclose(fp_bin);
@@ -169,6 +164,48 @@ void decodeTxt()
 
 }
 
+ //retorna o indice referente ao caracter do vetor alfabeto
+char retorna_caracter(int index){
+	return alfabeto[index];
+}
+
+// Função que converte 13 bits para um numero inteiro
+int bin2int(char read[]){ 
+	int inteiro=0, aux=1;
+	for(int i=12; i>=0; i--){
+		if(read[i]=='1')
+			inteiro += aux;
+		aux*=2;
+	}	
+	return inteiro;
+}
+
+// Lê de 13 bits (até o fim do arquivo .bin), calcula y1 e y2, e pega no vetor alfabeto pra printar em um novo arquivo
+void codeBin(){ 
+	int y1, y2;
+	FILE *arqLe,*arqEs;
+	char read[13];
+	char arquivo[50];
+	printf("Digite o nome do arquivo: ");
+	scanf("%s", arquivo);
+
+	arqLe = fopen(arquivo, "r+");
+	arqEs = fopen("saida.txt", "w+");
+
+	do{	
+		for(int i=0; i<13;i++)
+			fscanf(arqLe, "%c", &read[i]);
+		y1 = y2 = bin2int(read);
+		y1 /= 91;
+		y2 %= 91;
+		fprintf(arqEs, "%c ", retorna_caracter(y1));
+		fprintf(arqEs, "%c ", retorna_caracter(y2)); 
+	}while(!feof(arqLe));
+	fclose(arqLe);
+	fclose(arqEs);
+	printf("Code executado com sucesso!!\n\n");
+}
+
 /****************************************
 Função de interface de usuário, apresenta 
 as opções de codificação e decodificação 
@@ -177,7 +214,7 @@ de arquivo ou encerrar o programa.
 
 void mainMenu(){
 
-	int inicio = 0;
+	int inicio;
 
 	do
 	{
@@ -195,7 +232,7 @@ void mainMenu(){
     switch(inicio)
     {
     	case 1:
-    		//codeBin();
+    		codeBin();
     		break;
     	case 2:
     		printf("\nIniciando decodificacao do arquivo texto!\n");
@@ -220,5 +257,8 @@ int main(int argc, char *argv[])
         mainMenu();
 	}
 	
+	//TODO: DOCUMENTAÇÃO INTERNA
+
+	//system("PAUSE");
 	return 0;
 }
