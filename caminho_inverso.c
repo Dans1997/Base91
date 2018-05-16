@@ -1,18 +1,27 @@
-/*
+/******************************
 * Primeiro Exercício em C
-* Autor: Danillo Neves Souza
-*/
+*
+* Autores: Danillo Neves Souza - 
+*		   Andrei Buslik	   - 11/0024702
+*          Yan Victor		   - 14/0033599
+*		   Gustavo Costa	   - 14/0142568
+*
+* Disciplina: Software Básico
+* Professor: Marcelo Ladeira
+*
+* Data: 15/05/2018
+*******************************/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-char alfabeto[91] = { 0 };
+char alfabeto[91] = { 0 }; /* Vetor global para simular a tabela ASCII Base91 */
 
 /*************************************************
 Função que recebe um caracter, procura o caracter 
-no array 'alfabeto' e retorna o índice do caracter 
-quando o encontra no array.
+no vetor 'alfabeto' e retorna o índice do caracter 
+quando o encontra no vetor.
 **************************************************/
 
 int base91(char caracter)
@@ -27,7 +36,7 @@ int base91(char caracter)
 }
 
 /**********************************************************
-Função que preenche o array 'alfabeto' com os caracteres 
+Função que preenche o vetor 'alfabeto' com os caracteres 
 da tabela ASCII Base91 para que seja consultada nas funções 
 de codificação e decodificação.
 ***********************************************************/
@@ -136,24 +145,20 @@ void decodeTxt()
 
 	
 	fscanf(fp_txt, "%c", read);
-	//printf("\natual: %c\n", read[0]);
-	primeiro_asc = base91(read[0]);
+	primeiro_asc = base91(read[0]);                 /* Procura o caracter no vetor que representa a tabela ASCII Base91 */
 	fscanf(fp_txt, "%c", read);
-	//printf("\natual: %c\n", read[0]);
-	segundo_asc = base91(read[0]);
-    //printf("\nOLAAA VEII 1: %d e 2: %d\n", primeiro_asc, segundo_asc);
+	segundo_asc = base91(read[0]);                  /* Procura o caracter no vetor que representa a tabela ASCII Base91 */
 	original = (91)*(primeiro_asc) + (segundo_asc); /* Obtém número original */
-	fprintf(fp_bin, "%x\n", original);	/* Imprime o número no arquivo binário */
+	fprintf(fp_bin, "%x\n", original);	            /* Imprime o número no arquivo binário */
 	
 	while(!feof(fp_txt))
 	{
 	 fscanf(fp_txt, "%c", read); 
-	 primeiro_asc = base91(read[0]);
+	 primeiro_asc = base91(read[0]);                 /* Procura o caracter no vetor que representa a tabela ASCII Base91 */
      fscanf(fp_txt, "%c", read);
-	 segundo_asc = base91(read[0]);
+	 segundo_asc = base91(read[0]);                  /* Procura o caracter no vetor que representa a tabela ASCII Base91 */
 	 original = (91)*(primeiro_asc) + (segundo_asc); /* Obtém número original */
-     printf("\noriginal: %d\n", original);
-	 fprintf(fp_bin, "%x\n", original);	/* Imprime o número no arquivo binário */
+	 fprintf(fp_bin, "%x\n", original);	             /* Imprime o número no arquivo binário */
 	}
 
 	fclose(fp_bin);
@@ -172,7 +177,7 @@ de arquivo ou encerrar o programa.
 
 void mainMenu(){
 
-	int inicio;
+	int inicio = 0;
 
 	do
 	{
@@ -215,8 +220,5 @@ int main(int argc, char *argv[])
         mainMenu();
 	}
 	
-	//TODO: DOCUMENTAÇÃO INTERNA
-
-	//system("PAUSE");
 	return 0;
 }
