@@ -9,6 +9,12 @@
 
 char alfabeto[91] = { 0 };
 
+/*************************************************
+Função que recebe um caracter, procura o caracter 
+no array 'alfabeto' e retorna o índice do caracter 
+quando o encontra no array.
+**************************************************/
+
 int base91(char caracter)
 {
 	int i;
@@ -19,6 +25,12 @@ int base91(char caracter)
 		}
 	}
 }
+
+/**********************************************************
+Função que preenche o array 'alfabeto' com os caracteres 
+da tabela ASCII Base91 para que seja consultada nas funções 
+de codificação e decodificação.
+***********************************************************/
 
 void preencheAlfabeto()
 {
@@ -75,6 +87,12 @@ void preencheAlfabeto()
 		free(aux);
 }
 
+/**********************************************
+Função que lê um arquivo texto, decodifica seu 
+conteúdo a partir da tabela ASCII Base91 e grava 
+o conteúdo decodificado em um arquivo binário.
+************************************************/
+
 void decodeTxt()
 {
 	char *bin = NULL;
@@ -116,22 +134,27 @@ void decodeTxt()
         exit(-1);
     }
 
-	do
+	
+	fscanf(fp_txt, "%c", read);
+	//printf("\natual: %c\n", read[0]);
+	primeiro_asc = base91(read[0]);
+	fscanf(fp_txt, "%c", read);
+	//printf("\natual: %c\n", read[0]);
+	segundo_asc = base91(read[0]);
+    //printf("\nOLAAA VEII 1: %d e 2: %d\n", primeiro_asc, segundo_asc);
+	original = (91)*(primeiro_asc) + (segundo_asc); /* Obtém número original */
+	fprintf(fp_bin, "%x\n", original);	/* Imprime o número no arquivo binário */
+	
+	while(!feof(fp_txt))
 	{
-	  fscanf(fp_txt, "%c", read);
-	  printf("\natual: %c\n", read[0]);
-		primeiro_asc = base91(read[0]);
-
-    fscanf(fp_txt, "%c", read);
-		printf("\natual: %c\n", read[0]);
-		segundo_asc = base91(read[0]);
-    	printf("\nOLAAA VEII 1: %d e 2: %d\n", primeiro_asc, segundo_asc);
-
-		original = (91)*(primeiro_asc) + (segundo_asc); /* Obtém número original */
-        printf("\noriginal: %d\n", original);
-
-		fprintf(fp_bin, "%x\n", original);	/* Imprime o número no arquivo binário */
-	}while(!feof(fp_txt));
+	 fscanf(fp_txt, "%c", read); 
+	 primeiro_asc = base91(read[0]);
+     fscanf(fp_txt, "%c", read);
+	 segundo_asc = base91(read[0]);
+	 original = (91)*(primeiro_asc) + (segundo_asc); /* Obtém número original */
+     printf("\noriginal: %d\n", original);
+	 fprintf(fp_bin, "%x\n", original);	/* Imprime o número no arquivo binário */
+	}
 
 	fclose(fp_bin);
 	fclose(fp_txt);
@@ -140,6 +163,12 @@ void decodeTxt()
 	free(txt);
 
 }
+
+/****************************************
+Função de interface de usuário, apresenta 
+as opções de codificação e decodificação 
+de arquivo ou encerrar o programa.
+*****************************************/
 
 void mainMenu(){
 
@@ -171,6 +200,10 @@ void mainMenu(){
     		exit(0);
     }
 }
+
+/****************************
+Função principal do programa.
+*****************************/
 
 int main(int argc, char *argv[])
 {
