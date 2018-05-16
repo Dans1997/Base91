@@ -5,7 +5,7 @@
 *		   Andrei Buslik	   - 11/0024702 *
 *          Yan Victor		   - 14/0033599 *
 *		   Gustavo Costa	   - 14/0142568 *
-*		   Luís Eduardo		   - 15/0137885	*
+*											*
 * Disciplina: Software Básico				*
 * Professor: Marcelo Ladeira				*
 *											*			
