@@ -1,0 +1,25 @@
+/********************************************
+
+* Primeiro Exercício em C *
+
+*											*
+
+* Autores:  Danillo Neves Souza    - 14/0135839         *
+
+*	    Andrei Buslik	   - 11/0024702         *
+
+*           Yan Victor		   - 14/0033599         *
+
+*	    Gustavo Costa	   - 14/0142568         *
+
+*	    Luís Eduardo Luz Silva - 15/0137885	        *
+
+* Disciplina: Software Básico				*
+
+* Professor: Marcelo Ladeira				*
+
+*											*			
+
+* Data: 15/05/2018							*
+
+*********************************************/
